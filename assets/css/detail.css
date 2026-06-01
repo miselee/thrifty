@@ -1,0 +1,44 @@
+.detail-container{
+    padding:60px;
+    display:flex;
+    gap:50px;
+}
+
+.detail-image{
+    width:45%;
+}
+
+.detail-image img{
+    width:100%;
+    border-radius:20px;
+}
+
+.detail-info{
+    width:55%;
+}
+
+.detail-info h1{
+    margin-bottom:15px;
+}
+
+.detail-info h2{
+    color:#4A7C59;
+    margin-bottom:20px;
+}
+
+.detail-info p{
+    margin-bottom:15px;
+}
+
+.deskripsi{
+    line-height:1.8;
+}
+
+.btn-beli{
+    display:inline-block;
+    margin-top:20px;
+    background:#4A7C59;
+    color:white;
+    padding:12px 25px;
+    border-radius:10px;
+}

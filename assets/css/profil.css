@@ -1,0 +1,104 @@
+.profile-container{
+    max-width:1200px;
+    margin:40px auto;
+    padding:0 20px;
+}
+
+.subtitle{
+    color:#777;
+    margin-bottom:25px;
+}
+
+.profile-card{
+    background:#fff;
+    border:1px solid #eee;
+    border-radius:20px;
+
+    display:flex;
+
+    overflow:hidden;
+}
+
+.profile-left{
+    width:300px;
+
+    padding:30px;
+
+    border-right:1px solid #eee;
+
+    text-align:center;
+}
+
+.avatar{
+    width:140px;
+    height:140px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:#eef5e8;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:70px;
+}
+
+.profile-left h2{
+    margin-top:20px;
+}
+
+.member{
+    color:#888;
+    margin-top:5px;
+}
+
+.status-box{
+    margin-top:30px;
+
+    background:#f4f8ef;
+
+    border-radius:12px;
+
+    padding:20px;
+
+    text-align:left;
+}
+
+.verified{
+    color:#2f7d32;
+    font-weight:bold;
+    margin:15px 0;
+}
+
+.profile-right{
+    flex:1;
+    padding:30px;
+}
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+
+    padding:18px 0;
+
+    border-bottom:1px solid #eee;
+}
+
+.info-row span{
+    color:#555;
+}
+
+.banner{
+    margin-top:25px;
+
+    background:#f4f8ef;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    color:#555;
+}

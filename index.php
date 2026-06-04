@@ -143,6 +143,30 @@ switch($page){
 
         break;
 
+    case 'admin-dashboard':
+        require_once 'app/controllers/AdminController.php';
+        $controller = new AdminController();
+        $controller->dashboard();
+        break;
+
+    case 'admin-produk':
+        require_once 'app/controllers/AdminController.php';
+        $controller = new AdminController();
+        $controller->produk();
+        break;
+
+    case 'admin-pesanan':
+        require_once 'app/controllers/AdminController.php';
+        $controller = new AdminController();
+        $controller->pesanan();
+        break;
+
+    case 'admin-backup-manual':
+        require_once 'app/controllers/AdminController.php';
+        $controller = new AdminController();
+        $controller->backupManual();
+        break;
+
     default:
         echo "404 Not Found";
 }

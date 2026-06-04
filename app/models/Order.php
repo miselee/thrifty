@@ -74,4 +74,25 @@ class Order{
             WHERE id_pesanan='$id'"
         );
     }
+
+    public function getAllOrders()
+    {
+        return mysqli_query(
+            $this->conn,
+            "SELECT p.*, u.nama 
+             FROM pesanan p 
+             JOIN users u ON p.id_user = u.id_user 
+             ORDER BY p.tanggal DESC"
+        );
+    }
+
+    public function updateStatus($id_pesanan, $status)
+    {
+        return mysqli_query(
+            $this->conn,
+            "UPDATE pesanan 
+             SET status = '$status' 
+             WHERE id_pesanan = '$id_pesanan'"
+        );
+    }
 }

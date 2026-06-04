@@ -26,9 +26,12 @@ class AuthController{
                 =
                 $user;
 
-                header(
-                    "Location:index.php?page=beranda"
-                );
+                if (isset($user['role']) && $user['role'] === 'admin') {
+                    header("Location:index.php?page=admin-dashboard");
+                } else {
+                    header("Location:index.php?page=beranda");
+                }
+                exit();
             }
         }
 

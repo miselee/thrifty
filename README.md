@@ -89,6 +89,65 @@ END
 
 Dengan trigger ini, proses pemotongan saldo tidak perlu dilakukan secara manual oleh aplikasi sehingga konsistensi data pengguna dan transaksi tetap terjaga.
 
+## 🧱 Deadlock Management
+
+Untuk menjaga kestabilan transaksi checkout, aplikasi menggunakan stored procedure `checkout_aman`.
+Prosedur ini mengunci baris produk secara terurut dan menangani kondisi deadlock atau lock timeout dengan retry.
+
+Beberapa fitur penting dari `checkout_aman`:
+
+- Penguncian row `FOR UPDATE` pada produk dengan urutan `LEAST(p_produk1, p_produk2)` dan `GREATEST(p_produk1, p_produk2)`.
+- `SET SESSION innodb_lock_wait_timeout = 8` untuk batas tunggu kunci yang pendek.
+- Retry otomatis hingga 3 kali jika terjadi error deadlock (`1213`) atau lock timeout (`1205`).
+- Komit transaksi hanya setelah semua validasi stok dan saldo selesai.
+
+Contoh logika retry di stored procedure:
+
+```sql
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+BEGIN
+    DECLARE v_errno INT;
+    DECLARE v_msg TEXT;
+    GET DIAGNOSTICS CONDITION 1
+        v_errno = MYSQL_ERRNO,
+        v_msg = MESSAGE_TEXT;
+
+    ROLLBACK;
+
+    IF (v_errno = 1213 OR v_errno = 1205) AND v_retry < v_max_retry THEN
+        SET v_retry = v_retry + 1;
+        DO SLEEP(0.1 * v_retry);
+    ELSE
+        SET v_done = TRUE;
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = v_msg;
+    END IF;
+END;
+```
+
+Dengan pendekatan ini, proses checkout lebih aman terhadap persaingan akses data sekaligus menjaga konsistensi stok dan saldo.
+
+## 🧩 Fragmentasi Produk
+
+Sistem memisahkan produk ke dalam dua tabel fragmentasi:
+
+- `produk_tersedia` untuk produk yang stoknya masih tersedia.
+- `produk_habis` untuk produk yang sudah habis.
+
+Fragmentasi ini membantu menjaga query lebih terfokus dan mempermudah pemrosesan tampilan produk berdasarkan ketersediaan.
+
+Logika fragmentasi dijalankan pada stored procedure `tambah_produk()`:
+
+```sql
+IF p_stok > 0 THEN
+    INSERT INTO produk_tersedia (...)
+    VALUES (...);
+ELSE
+    INSERT INTO produk_habis (...)
+    VALUES (...);
+END IF;
+```
+
+Di antarmuka admin, terdapat halaman `Fragmentasi Produk` yang menampilkan ringkasan jumlah baris dan tabel gabungan produk dari kedua fragment.
 
 ## 💾 Backup Manajemen
 

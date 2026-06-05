@@ -70,35 +70,21 @@ switch($page){
         break;
 
     case 'hapus-cart':
-        require_once
-        'app/controllers/CartController.php';
-        $controller =
-        new CartController();
+        require_once 'app/controllers/CartController.php';
+        $controller = new CartController();
         $controller->delete();
         break;
     
     case 'checkout':
-
-        require_once
-        'app/controllers/OrderController.php';
-
-        $controller =
-        new OrderController();
-
+        require_once 'app/controllers/OrderController.php';
+        $controller = new OrderController();
         $controller->checkout();
-
         break;
 
     case 'process-order':
-
-        require_once
-        'app/controllers/OrderController.php';
-
-        $controller =
-        new OrderController();
-
+        require_once 'app/controllers/OrderController.php';
+        $controller = new OrderController();
         $controller->process();
-
         break;
 
     case 'detail-pesanan':
@@ -108,39 +94,21 @@ switch($page){
     break;
 
     case 'sukses':
-
-        require_once
-        'app/controllers/OrderController.php';
-
-        $controller =
-        new OrderController();
-
+        require_once 'app/controllers/OrderController.php';
+        $controller = new OrderController();
         $controller->success();
-
         break;
 
     case 'profil':
-
-        require_once
-        'app/controllers/ProfileController.php';
-
-        $controller =
-        new ProfileController();
-
+        require_once 'app/controllers/ProfileController.php';
+        $controller = new ProfileController();
         $controller->profile();
-
         break;
 
     case 'riwayat':
-
-        require_once
-        'app/controllers/ProfileController.php';
-
-        $controller =
-        new ProfileController();
-
+        require_once 'app/controllers/ProfileController.php';
+        $controller = new ProfileController();
         $controller->history();
-
         break;
 
     case 'admin-dashboard':
@@ -159,12 +127,6 @@ switch($page){
         require_once 'app/controllers/AdminController.php';
         $controller = new AdminController();
         $controller->pesanan();
-        break;
-
-    case 'admin-backup-manual':
-        require_once 'app/controllers/AdminController.php';
-        $controller = new AdminController();
-        $controller->backupManual();
         break;
 
     default:

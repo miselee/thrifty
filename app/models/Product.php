@@ -25,7 +25,11 @@ class Product{
     {
         return mysqli_query(
             $this->conn,
-            "SELECT * FROM produk LIMIT $limit"
+            "SELECT *
+            FROM produk
+            WHERE stok > 0
+            ORDER BY id_produk DESC
+            LIMIT $limit"
         );
     }
 

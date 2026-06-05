@@ -42,18 +42,17 @@
 
 <?php
 
-$total = 0;
 $data = [];
 
 while($item = mysqli_fetch_assoc($items))
 {
     $data[] = $item;
-    $total += ($item['harga'] * $item['qty']);
 }
+
+$saldo = $_SESSION['user']['saldo'] ?? 0;
 
 $platform = ceil($total * 0.05);
 $grand = $total + $platform;
-$saldo = $_SESSION['user']['saldo'] ?? 0;
 
 ?>
 

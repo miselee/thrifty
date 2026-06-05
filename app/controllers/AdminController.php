@@ -41,9 +41,18 @@ class AdminController {
             $target = "assets/img/" . basename($gambar);
             move_uploaded_file($_FILES['gambar']['tmp_name'], $target);
 
-            mysqli_query($this->conn, "INSERT INTO produk (nama_produk, harga, stok, ukuran, kondisi, gambar, deskripsi) VALUES ('$nama', '$harga', '$stok', '$ukuran', '$kondisi', '$gambar', '$deskripsi')");
-            header("Location:index.php?page=admin-produk");
-            exit();
+            mysqli_query(
+                $this->conn,
+                "CALL tambah_produk(
+                    '$nama',
+                    '$harga',
+                    '$stok',
+                    '$ukuran',
+                    '$kondisi',
+                    '$gambar',
+                    '$deskripsi'
+                )"
+            );
         }
 
         if (isset($_GET['delete_id'])) {
@@ -70,51 +79,5 @@ class AdminController {
         include 'app/views/admin/pesanan.php';
     }
 
-    public function backupManual() {
-        $tables = array();
-        $result = mysqli_query($this->conn, "SHOW TABLES");
-        while ($row = mysqli_fetch_row($result)) {
-            $tables[] = $row[0];
-        }
-
-        $sqlScript = "";
-        foreach ($tables as $table) {
-            $query = "SHOW CREATE TABLE $table";
-            $result = mysqli_query($this->conn, $query);
-            $row = mysqli_fetch_row($result);
-            $sqlScript .= "\n\n" . $row[1] . ";\n\n";
-
-            $query = "SELECT * FROM $table";
-            $result = mysqli_query($this->conn, $query);
-            $columnCount = mysqli_num_fields($result);
-
-            for ($i = 0; $i < $columnCount; $i++) {
-                while ($row = mysqli_fetch_row($result)) {
-                    $sqlScript .= "INSERT INTO $table VALUES(";
-                    for ($j = 0; $j < $columnCount; $j++) {
-                        $row[$j] = $row[$j] ?? '';
-                        if (isset($row[$j])) {
-                            $sqlScript .= '"' . mysqli_real_escape_string($this->conn, $row[$j]) . '"';
-                        } else {
-                            $sqlScript .= '""';
-                        }
-                        if ($j < ($columnCount - 1)) {
-                            $sqlScript .= ',';
-                        }
-                    }
-                    $sqlScript .= ");\n";
-                }
-            }
-            $sqlScript .= "\n";
-        }
-
-        if (!empty($sqlScript)) {
-            $backup_file_name = 'backup_manual_' . date('Y-m-d_H-i-s') . '.sql';
-            header('Content-Type: application/octet-stream');
-            header("Content-Transfer-Encoding: Binary");
-            header("Content-disposition: attachment; filename=\"" . $backup_file_name . "\"");
-            echo $sqlScript;
-            exit;
-        }
-    }
+    
 }

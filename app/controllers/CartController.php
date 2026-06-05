@@ -23,16 +23,15 @@ class CartController{
 
     public function index()
     {
-        $id_user =
-        $_SESSION['user']['id_user'];
+        $id_user = $_SESSION['user']['id_user'];
 
         $cart = new Cart();
 
-        $items =
-        $cart->getCart($id_user);
+        $items = $cart->getCart($id_user);
 
-        include
-        'app/views/cart/keranjang.php';
+        $total = $cart->getTotalCart($id_user);
+
+        include 'app/views/cart/keranjang.php';
     }
 
     public function delete()

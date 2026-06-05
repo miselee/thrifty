@@ -9,17 +9,15 @@ class OrderController{
 
     public function checkout()
     {
-        $id_user =
-        $_SESSION['user']['id_user'];
+        $id_user = $_SESSION['user']['id_user'];
 
-        $cart =
-        new Cart();
+        $cart = new Cart();
 
-        $items =
-        $cart->getCart($id_user);
+        $items = $cart->getCart($id_user);
 
-        include
-        'app/views/cart/checkout.php';
+        $total = $cart->getTotalCart($id_user);
+
+        include 'app/views/cart/checkout.php';
     }
 
     public function process()

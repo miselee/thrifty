@@ -14,13 +14,11 @@
 
 <?php
 
-$total = 0;
 $cartData = [];
 
 while($item = mysqli_fetch_assoc($items))
 {
     $cartData[] = $item;
-    $total += ($item['harga'] * $item['qty']);
 }
 
 $biaya_platform = ceil($total * 0.05);

@@ -15,22 +15,21 @@ class AuthController{
                 $_POST['email']
             );
 
-            if(
+            if (
                 $user &&
-                $user['password']
-                ==
-                md5($_POST['password'])
-            ){
+                $user['password'] == md5($_POST['password'])
+            ) {
 
-                $_SESSION['user']
-                =
-                $user;
+                $_SESSION['user'] = $user;
+                $_SESSION['user_id'] = $user['id_user'];
+                $_SESSION['role'] = $user['role'];
 
-                if (isset($user['role']) && $user['role'] === 'admin') {
+                if ($user['role'] === 'admin') {
                     header("Location:index.php?page=admin-dashboard");
                 } else {
                     header("Location:index.php?page=beranda");
                 }
+
                 exit();
             }
         }

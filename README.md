@@ -90,9 +90,41 @@ END
 Dengan trigger ini, proses pemotongan saldo tidak perlu dilakukan secara manual oleh aplikasi sehingga konsistensi data pengguna dan transaksi tetap terjaga.
 
 
-## 💾 Backup Otomatis
+## 💾 Backup Manajemen
 
-Untuk menjaga keamanan dan ketersediaan data, sistem Thrifty dilengkapi fitur backup database otomatis menggunakan utilitas mysqldump. Backup ini bertujuan untuk mengantisipasi kehilangan data akibat kesalahan sistem, kerusakan database, atau faktor lainnya.
+Untuk menjaga keamanan dan ketersediaan data, sistem Thrifty dilengkapi fitur backup database menggunakan utilitas mysqldump. Backup ini bertujuan untuk mengantisipasi kehilangan data akibat kesalahan sistem, kerusakan database, atau faktor lainnya.
+
+**Otomatis**
+
+Backup dilakukan melalui file `backup_auto.php, berfungsi untuk mencadangkan (backup) database thrifty secara otomatis ke dalam folder lokal /storage/backups/. Prosesnya dilakukan dengan mendeteksi waktu saat ini di zona Asia/Jakarta untuk penamaan file .sql yang unik, lalu mengeksekusi program mysqldump.exe bawaan Laragon menggunakan fungsi exec().
+
+📄 backup_auto.php
+
+```
+<?php
+
+date_default_timezone_set('Asia/Jakarta');
+
+$backup_dir = __DIR__ . '/storage/backups/';
+
+if (!is_dir($backup_dir)) {
+    mkdir($backup_dir, 0755, true);
+}
+
+$date = date('Y-m-d_H-i-s');
+$backupFile = $backup_dir . "thrifty_backup_$date.sql";
+
+$mysqldump_path = "C:\\laragon\\bin\\mysql\\mysql-8.0.30-winx64\\bin\\mysqldump.exe";
+
+$db_user = 'root';
+$db_pass = '';
+$db_name = 'thrifty';
+
+$command = "\"$mysqldump_path\" -u $db_user $db_name --result-file=\"$backupFile\"";
+
+exec($command);
+
+**Manual**
 
 Backup dilakukan melalui file `backup.php` dan hanya dapat dijalankan oleh administrator yang telah melakukan login. Sebelum proses backup dijalankan, sistem akan memverifikasi session pengguna dan role admin untuk memastikan keamanan akses.
 

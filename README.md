@@ -96,7 +96,7 @@ Untuk menjaga keamanan dan ketersediaan data, sistem Thrifty dilengkapi fitur ba
 
 **Otomatis**
 
-Backup dilakukan melalui file `backup_auto.php, berfungsi untuk mencadangkan (backup) database thrifty secara otomatis ke dalam folder lokal /storage/backups/. Prosesnya dilakukan dengan mendeteksi waktu saat ini di zona Asia/Jakarta untuk penamaan file .sql yang unik, lalu mengeksekusi program mysqldump.exe bawaan Laragon menggunakan fungsi exec().
+Backup dilakukan melalui file `backup_auto.php`, berfungsi untuk mencadangkan (backup) database thrifty secara otomatis ke dalam folder lokal /storage/backups/. Prosesnya dilakukan dengan mendeteksi waktu saat ini di zona Asia/Jakarta untuk penamaan file .sql yang unik, lalu mengeksekusi program mysqldump.exe bawaan Laragon menggunakan fungsi exec().
 
 📄 backup_auto.php
 

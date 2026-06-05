@@ -4,17 +4,17 @@ session_start();
 
 $page = $_GET['page'] ?? 'login';
 
-$publicPage = ['login','register'];
+$publicPage = ['login', 'register'];
 
-if(
+if (
     !isset($_SESSION['user']) &&
-    !in_array($page,$publicPage)
-){
+    !in_array($page, $publicPage)
+) {
     header("Location:index.php?page=login");
     exit();
 }
 
-switch($page){
+switch ($page) {
 
     case 'login':
         require_once 'app/controllers/AuthController.php';
@@ -25,7 +25,7 @@ switch($page){
     case 'logout':
         require_once 'app/controllers/AuthController.php';
         $controller =
-        new AuthController();
+            new AuthController();
         $controller->logout();
         break;
 
@@ -55,17 +55,17 @@ switch($page){
 
     case 'add-cart':
         require_once
-        'app/controllers/CartController.php';
+            'app/controllers/CartController.php';
         $controller =
-        new CartController();
+            new CartController();
         $controller->add();
         break;
 
     case 'keranjang':
         require_once
-        'app/controllers/CartController.php';
+            'app/controllers/CartController.php';
         $controller =
-        new CartController();
+            new CartController();
         $controller->index();
         break;
 
@@ -74,7 +74,7 @@ switch($page){
         $controller = new CartController();
         $controller->delete();
         break;
-    
+
     case 'checkout':
         require_once 'app/controllers/OrderController.php';
         $controller = new OrderController();
@@ -91,7 +91,7 @@ switch($page){
         require_once 'app/controllers/OrderController.php';
         $controller = new OrderController();
         $controller->detail();
-    break;
+        break;
 
     case 'sukses':
         require_once 'app/controllers/OrderController.php';
@@ -128,7 +128,11 @@ switch($page){
         $controller = new AdminController();
         $controller->pesanan();
         break;
-
+    case 'admin-fragmentasi':
+        require_once 'app/controllers/AdminController.php';
+        $controller = new AdminController();
+        $controller->fragmentasi();
+        break;
     default:
         echo "404 Not Found";
 }

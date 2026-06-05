@@ -1,30 +1,112 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Kelola Produk - Thrifty Admin</title>
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/checkout.css">
     <style>
-        .admin-wrapper { max-width: 1200px; margin: 40px auto; padding: 0 20px; display: flex; gap: 30px; }
-        .sidebar { width: 250px; background: #fff; border: 1px solid #eee; border-radius: 16px; padding: 20px; height: fit-content; }
-        .sidebar ul { list-style: none; padding: 0; }
-        .sidebar ul li { margin-bottom: 15px; }
-        .sidebar ul li a { display: block; padding: 10px; border-radius: 8px; color: #333; font-weight: 500; }
-        .sidebar ul li a.active, .sidebar ul li a:hover { background: #DDE8C8; color: #2D4D35; }
-        .main-content { flex: 1; }
-        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 15px; }
-        .form-group { display: flex; flex-direction: column; gap: 5px; }
-        .form-group full { grid-column: span 2; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #eee; }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; }
-        th { background: #f4fbf6; color: #4A7C59; }
-        .btn-danger { background: #ff4d4f; color: white; padding: 6px 12px; border-radius: 6px; font-size: 14px; }
+        .admin-wrapper {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 16px;
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar ul li a {
+            display: block;
+            padding: 10px;
+            border-radius: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .sidebar ul li a.active,
+        .sidebar ul li a:hover {
+            background: #DDE8C8;
+            color: #2D4D35;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group full {
+            grid-column: span 2;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+
+        th,
+        td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f4fbf6;
+            color: #4A7C59;
+        }
+
+        .btn-danger {
+            background: #ff4d4f;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
     </style>
 </head>
+
 <body>
     <nav class="navbar">
-        <div class="logo"><h2>Thrifty Admin</h2></div>
-        <ul><li><a href="index.php?page=logout">Logout</a></li></ul>
+        <div class="logo">
+            <h2>Thrifty Admin</h2>
+        </div>
+        <ul>
+            <li><a href="index.php?page=logout">Logout</a></li>
+        </ul>
     </nav>
 
     <div class="admin-wrapper">
@@ -33,6 +115,7 @@
                 <li><a href="index.php?page=admin-dashboard">Dashboard</a></li>
                 <li><a href="index.php?page=admin-produk" class="active">Kelola Produk</a></li>
                 <li><a href="index.php?page=admin-pesanan">Kelola Pesanan</a></li>
+                <li><a href="index.php?page=admin-fragmentasi">Fragmentasi Produk</a></li>
             </ul>
         </div>
         <div class="main-content">
@@ -68,7 +151,8 @@
                         <textarea name="deskripsi" required></textarea>
                     </div>
                     <div style="grid-column: span 2;">
-                        <button type="submit" name="add_produk" class="pay-btn" style="padding: 12px; font-size: 16px;">Simpan Produk</button>
+                        <button type="submit" name="add_produk" class="pay-btn"
+                            style="padding: 12px; font-size: 16px;">Simpan Produk</button>
                     </div>
                 </form>
             </div>
@@ -86,21 +170,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while($row = mysqli_fetch_assoc($products)): ?>
-                    <tr>
-                        <td><img src="assets/img/<?php echo $row['gambar']; ?>" width="50" height="50" style="object-fit: cover; border-radius: 6px;"></td>
-                        <td><?php echo $row['nama_produk']; ?></td>
-                        <td>Rp <?php echo number_format($row['harga']); ?></td>
-                        <td><?php echo $row['stok']; ?></td>
-                        <td><?php echo $row['ukuran']; ?></td>
-                        <td>
-                            <a href="index.php?page=admin-produk&delete_id=<?php echo $row['id_produk']; ?>" class="btn-danger" onclick="return confirm('Hapus produk ini?')">Hapus</a>
-                        </td>
-                    </tr>
+                    <?php while ($row = mysqli_fetch_assoc($products)): ?>
+                        <tr>
+                            <td><img src="assets/img/<?php echo $row['gambar']; ?>" width="50" height="50"
+                                    style="object-fit: cover; border-radius: 6px;"></td>
+                            <td><?php echo $row['nama_produk']; ?></td>
+                            <td>Rp <?php echo number_format($row['harga']); ?></td>
+                            <td><?php echo $row['stok']; ?></td>
+                            <td><?php echo $row['ukuran']; ?></td>
+                            <td>
+                                <a href="index.php?page=admin-produk&delete_id=<?php echo $row['id_produk']; ?>"
+                                    class="btn-danger" onclick="return confirm('Hapus produk ini?')">Hapus</a>
+                            </td>
+                        </tr>
                     <?php endwhile; ?>
                 </tbody>
             </table>
         </div>
     </div>
 </body>
+
 </html>

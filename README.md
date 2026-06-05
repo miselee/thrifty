@@ -123,6 +123,7 @@ $db_name = 'thrifty';
 $command = "\"$mysqldump_path\" -u $db_user $db_name --result-file=\"$backupFile\"";
 
 exec($command);
+```
 
 **Manual**
 
